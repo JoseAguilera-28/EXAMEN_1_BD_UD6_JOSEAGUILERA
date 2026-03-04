@@ -134,7 +134,11 @@ WHERE pr.fecha >= '2023-01-01' AND pr.fecha <= '2023-12-31';
 
 
 ### Tráfico de red y uso de memoria:
-La Versión 1 utiliza SELECT *, lo que obliga a la base de datos a leer, procesar en RAM y enviar por la red todas las columnas de ambas tablas (incluyendo IDs, recaudación, ciudad del cine, etc.), saturando la memoria y el ancho de banda inútilmente. La Versión 2 solo solicita la columna necesaria (p.titulo), minimizando el consumo de recursos. Además, el uso de DISTINCT evita devolver el mismo título cientos de veces si la película se proyectó muchos días.
+La Versión 1 utiliza SELECT *, lo que obliga a la base de datos a leer, procesar en RAM y enviar por la red todas las columnas de ambas tablas (incluyendo IDs, recaudación, ciudad del cine, etc.), saturando la memoria y el ancho de banda inútilmente. 
+
+La Versión 2 solo solicita la columna necesaria (p.titulo), minimizando el consumo de recursos. 
+
+Además, el uso de DISTINCT evita devolver el mismo título cientos de veces si la película se proyectó muchos días.
 
 ### Aprovechamiento de indices:
 En la versión 1, aplicar una función a la columna en el filtrado (YEAR(pr.fecha)) es una pésima práctica porque "ciega" a la base de datos. 
